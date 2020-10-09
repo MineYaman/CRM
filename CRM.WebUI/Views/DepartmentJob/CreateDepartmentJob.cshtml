@@ -1,0 +1,47 @@
+﻿
+@model Tuple<DepartmentListModel, JobListModel>
+
+@{
+    ViewData["Title"] = "CreateDepartmentJob";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>CreateDepartmentJob</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateDepartmentJob">
+            <div class="form-group">
+                <label asp-for="Item1">Choose Department:</label>
+                <select class="form-control" name="depId" id="SelectedValue">
+                    @foreach (var item in Model.Item1.Departments)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Item2">Choose Job:</label>
+                <select class="form-control" name="jobId" id="SelectedValue">
+                    @foreach (var item in Model.Item2.Jobs)
+                    { 
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="ListDepartmentJob">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

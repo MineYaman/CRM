@@ -1,0 +1,49 @@
+﻿
+@model IEnumerable<ApplicationUser>
+
+@{
+    ViewData["Title"] = "ListAspNetUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ListAspNetUsers</h1>
+
+
+@if (Model.Count() > 0)
+{
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td style="width:12px;">Deleted</td>
+                <td style="width:150px;"></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FullName</td>
+                    <td>@item.Deleted</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm mr-2" href="/department/departments/@item.Id">Edit</a>
+                        <form action="/department/deletedepartment/@item.Id" method="post" style="display:inline;">
+                            <input type="hidden" name="departmentId" value="@item.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">
+        <h4>No Departments</h4>
+    </div>
+}
+

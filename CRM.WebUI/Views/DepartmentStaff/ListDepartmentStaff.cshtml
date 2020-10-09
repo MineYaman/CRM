@@ -1,0 +1,65 @@
+﻿
+@model Tuple<DepartmentStaffModel, DepartmentListModel, List<ApplicationUser>>
+
+@{
+    ViewData["Title"] = "ListDepartmentStaff";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ListDepartmentStaff</h1>
+
+@if (Model.Item1.DepartmentStaffs.Count() > 0)
+{
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>Department Name</td>
+            <td>Staff Name</td>
+            <td style="width:12px;">Deleted</td>
+            <td style="width:150px;"></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var item in Model.Item1.DepartmentStaffs)
+            {
+
+                foreach (var itemDepartment in Model.Item2.Departments)
+                {
+                    if (item.DepartmentId == itemDepartment.Id)
+                    {
+                        <td>@itemDepartment.Name</td>
+                    }
+                }
+
+                foreach (var itemUser in Model.Item3)
+                {
+                    if (item.UserId == itemUser.Id)
+                    {
+
+                        <td>@itemUser.FullName</td>
+                    }
+                }
+                <td>
+                    <form action="/departmentstaff/deletedepartmentstaff/" method="post" style="display:inline;">
+                        <input type="hidden" name="departmentId" value="@item.DepartmentId" />
+                        <input type="hidden" name="userId" value="@item.UserId" />
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+
+            }
+
+        </tr>
+
+    </tbody>
+
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">
+        <h4>No Departments Staffs</h4>
+    </div>
+}

@@ -1,0 +1,94 @@
+﻿
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">CRM</a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a href="#" class="nav-link active">Home</a>
+            </li>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("admin") || User.IsInRole("competent"))
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Department" asp-action="CreateDepartment" class="nav-link">Add Department</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Department" asp-action="ListDepartment" class="nav-link">Delete Department</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Department" asp-action="ListDepartment" class="nav-link">List Department</a>
+                    </li>
+                }
+                if (User.IsInRole("customer"))
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Job" asp-action="CreateJob" class="nav-link">Add Job</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Job" asp-action="ListJob" class="nav-link">List Job</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Job" asp-action="StateJob" class="nav-link">Job State</a>
+                    </li>
+                }
+                if (User.IsInRole("attendant") || User.IsInRole("admin"))
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Assignment" asp-action="Assignment" class="nav-link">redirect to staff</a>
+                    </li>
+                }
+                if (User.IsInRole("admin"))
+                {
+                    <li class="nav-item">
+                        <a asp-controller="DepartmentStaff" asp-action="CreateDepartmentStaff" class="nav-link">Staff exchange in department</a>
+                    </li>
+                }
+            }
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item">
+                    <a asp-controller="Account" asp-action="Manage" class="nav-link">
+                        @User.Identity.Name
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-controller="Account" asp-action="Logout" class="nav-link">Logout</a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a asp-controller="DepartmentJob" asp-action="CreateDepartmentJob" class="nav-link">CreateDepartmentJob</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="DepartmentJob" asp-action="ListDepartmentJob" class="nav-link">ListDepartmentJob</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="DepartmentStaff" asp-action="CreateDepartmentStaff" class="nav-link">CreateAspNetUsers</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="DepartmentStaff" asp-action="ListDepartmentStaff" class="nav-link">ListAspNetUsers</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="DepartmentAttendant" asp-action="CreateDepartmentAttendant" class="nav-link">CreateAspNetUsersAttendant</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="DepartmentAttendant" asp-action="ListDepartmentAttendant" class="nav-link">ListAspNetUsersAttendant</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Account" asp-action="Register" class="nav-link">Register</a>
+                </li>
+            }
+        </ul>
+    </div>
+</nav>

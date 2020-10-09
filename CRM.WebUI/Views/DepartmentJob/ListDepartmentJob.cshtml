@@ -1,0 +1,64 @@
+﻿
+@model Tuple<DepartmentJobModel, DepartmentListModel, JobListModel>
+
+@{
+    ViewData["Title"] = "ListDepartmentJob";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ListDepartmentJob</h1>
+
+@if (Model.Item1.DepartmentJobs.Count() > 0)
+{
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Department Name</td>
+                <td>Job Name</td>
+                <td style="width:12px;">Deleted</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var item in Model.Item1.DepartmentJobs)
+                {
+
+                    foreach (var itemDepartment in Model.Item2.Departments)
+                    {
+                        if (item.DepartmentId == itemDepartment.Id)
+                        {
+                            <td>@itemDepartment.Name</td>
+                        }
+                    }
+
+                    foreach (var itemJob in Model.Item3.Jobs)
+                    {
+                        if (item.JobId == itemJob.Id)
+                        {
+
+                            <td>@itemJob.Name</td>
+                        }
+                    }
+                    <td>
+                        <form action="/departmentjob/deletedepartmentjob/" method="post" style="display:inline;">
+                            <input type="hidden" name="departmentId" value="@item.DepartmentId" />
+                            <input type="hidden" name="jobId" value="@item.JobId" />
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+
+                }
+
+            </tr>
+
+        </tbody>
+
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">
+        <h4>No Departments Staffs</h4>
+    </div>
+}
